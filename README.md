@@ -137,10 +137,10 @@ Actionの探索方法はε-greedy法と呼ばれる手法を使用して、エ�
 <tr><td rowspan="3">一般パラメータ</td><td>ACITON SIZE</td><td>11</td></tr>
 <tr><td>EPISODES</td><td>1000</td></tr>
 <tr><td>UPDATE_STEP</td><td>50</td></tr>
-<tr><td rowspan="4">DQN のハイパーパラメータ</td><td>GAMMA</td><td>0\.9</td></tr>
-<tr><td>学習率</td><td>0\.0005</td></tr>
-<tr><td>イプシロンの開始値</td><td>0\.5</td></tr>
-<tr><td>イプシロンの最終値</td><td>0\.01</td></tr>
+<tr><td rowspan="4">DQN のハイパーパラメータ</td><td>GAMMA</td><td>0.9</td></tr>
+<tr><td>学習率</td><td>0.0005</td></tr>
+<tr><td>イプシロンの開始値</td><td>0.5</td></tr>
+<tr><td>イプシロンの最終値</td><td>0.01</td></tr>
 <tr><td rowspan="3">ミニバッチのサイズ</td><td>SMALL_BATCH_SIZE</td><td>18</td></tr>
 <tr><td>BIG_BATCH_SIZE</td><td>144</td></tr>
 <tr><td>BATCH_SIZE_DOOR</td><td>1000</td></tr>
