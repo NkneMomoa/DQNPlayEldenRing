@@ -2,6 +2,95 @@
 #UndergraduateThesis  →　But  Not Success
 
 
+I have set up 11 player actions: ① Do nothing, ② Attack, ③ Jump, ④-⑦ Move up, down, left, right, ⑧-⑪ Dodge actions in the up, down, left, right directions.
+
+In this study, it was difficult to obtain environment information from memory to obtain commercially available Elden Ring environment information. Therefore, during training, all environment information was obtained through image recognition (OpenCV). 
+
+Therefore, in this study, the enemy's hit point bar (referred to as "HP bar"), the player's HP bar, and stamina bar were quantified from the game screen and used to assess the environment state and rewards. Additionally, when attacked by an enemy, a debuff bar indicating attribute damage appears in the center of the screen. In this experiment, the character cannot take actions to recover their own HP, so the debuff progress bar reaches 100% and no additional attribute damage is generated. However, this progress bar is located in the center of the screen, so to avoid it affecting the screen analysis, those parts were removed before capturing. Therefore, the player and enemy states were captured in a screen size of 144 in length and 68 in width, then downscaled by 2 and converted to grayscale before being input into the CNN for environment state assessment. The captured area is indicated by the frame in Figure 2. The numerical settings for each reward are shown in Table 3.
+
+![image](https://github.com/NkneMomoa/DQNPlayEldenRing/assets/65263314/48681a7d-dd7e-45ec-99c1-b2cc77975592)
+
+Figure 2. Captured Screen Area
+
+
+|State|Reward |
+| :-: | :-: |
+|<p>Player HP bar = 0</p><p>Enemy BOSS HP bar = 0</p><p>Player gets hit by enemy attack</p><p>Player's attack hits the enemy</p><p>Stamina bar becomes empty after performing an action</p>|<p>-100</p><p>+100</p><p>-45</p><p>+30</p><p>-10</p>|
+
+Table 3. Reward Settings
+
+The DQN neural network consists of a combination of a Current Network and a Target Network. The structure of each network includes convolutional layers, pooling layers, hidden layers, and an output layer. Additionally, dropout is implemented in the convolutional layers and hidden layers. Dropout is a technique used during the training of neural networks to randomly deactivate a certain percentage of neurons, thereby preventing overfitting.<sup>4)</sup> The two neural networks are constructed with the same settings, as shown in Table 4. Table 4. Neural Network Configuration
+
+|Input Layer|tf.placeholder||
+| :-: | :-: | :- |
+|<p>Convolutional Layer</p><p>Pooling Layer</p>|<p>5，5，32，64</p><p>2\*2</p>|Activation Function ReLU|
+|<p>Convolutional Layer</p><p>Pooling Layer</p>|<p>5，5，32，64</p><p>2\*2</p>|Activation Function ReLU|
+|Fully Connected Layer|512|Activation Function ReLU|
+|Hidden Layer|Dropout　0.5||
+|Fully Connected Layer|256|Activation Function ReLU|
+|Hidden Layer|Dropout　0.25||
+|Output Layer|Dropout　0.25||
+
+The exploration method for selecting actions is using the ε-greedy strategy, which determines whether the agent chooses an action or not. For each state, the expected reward that each action yields is saved as the Q-value. The Q-value is obtained using a neural network trained with the Q-function. In the code, the self.Q_value.eval() function is called to compute the Q-value for the current state. In the ε-greedy strategy, actions are randomly chosen with a probability of ε, and the action with the maximum Q-value is chosen with a probability of 1-ε. The code uses the random.random() function to return True with a probability of ε and False with a probability of 1-ε. If random.random() returns True (i.e., with a probability of ε), a random action is chosen from the action space. On the other hand, if random.random() returns False (i.e., with a probability of 1-ε), the action with the maximum Q-value is selected. To select the action with the maximum Q-value, the np.argmax() function is used to obtain the index of the maximum value from the Q-value list. Finally, in this function, the agent selects actions randomly.
+
+The details of the parameters used in this approach are presented in Table 5.
+
+Table 5. Used Parameters 
+
+
+<table>
+  <tr>
+    <th></th>
+    <th>Parameter</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td rowspan="3">General Parameters</td>
+    <td>ACTION_SIZE</td>
+    <td>11</td>
+  </tr>
+  <tr>
+    <td>EPISODES</td>
+    <td>1000</td>
+  </tr>
+  <tr>
+    <td>UPDATE_STEP</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td rowspan="4">DQN Hyperparameters</td>
+    <td>GAMMA</td>
+    <td>0.9</td>
+  </tr>
+  <tr>
+    <td>Learning rate</td>
+    <td>0.0005</td>
+  </tr>
+  <tr>
+    <td>Epsilon initial value</td>
+    <td>0.5</td>
+  </tr>
+  <tr>
+    <td>Epsilon final value</td>
+    <td>0.01</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Mini-batch Sizes</td>
+    <td>SMALL_BATCH_SIZE</td>
+    <td>18</td>
+  </tr>
+  <tr>
+    <td>BIG_BATCH_SIZE</td>
+    <td>144</td>
+  </tr>
+  <tr>
+    <td>BATCH_SIZE_DOOR</td>
+    <td>1000</td>
+  </tr>
+</table>
+
+
+### 日本語：
 
 プレイヤーのアクションを11個設置した：①何もしない、②攻撃、③ジャンプ、④～⑦上下左右の移動、⑧～⑪上下左右の回避アクションの①～⑪である。
 
