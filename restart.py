@@ -1,0 +1,53 @@
+import directkeys
+import time
+
+
+def restart():
+    time.sleep(2)
+    directkeys.certain()
+    time.sleep(10)
+    print("Hold up ,Moving now")
+    directkeys.go_forward_QL(10)
+    time.sleep(0.5)
+    directkeys.go_right()
+    time.sleep(0.5)
+    directkeys.go_right()
+    time.sleep(0.5)
+    directkeys.go_right()
+    time.sleep(0.5)
+    directkeys.go_forward_QL(1.4)
+    time.sleep(0.5)
+    directkeys.go_left()
+    directkeys.certain()
+    time.sleep(1)
+    directkeys.doleft()
+    time.sleep(1)
+    directkeys.certain()
+    time.sleep(6)
+    directkeys.go_forward_QL(3.1)
+    time.sleep(0.5)
+    directkeys.lock_vision()
+
+    #ice boss move
+    # directkeys.go_forward_QL(10)
+    # time.sleep(0.5)
+    # directkeys.go_left()
+    # time.sleep(0.5)
+    # directkeys.go_left()
+    # time.sleep(0.5)
+    # directkeys.go_left()
+    # directkeys.certain()
+    # time.sleep(1)
+    # directkeys.doleft()
+    # time.sleep(1)
+    # directkeys.certain()
+    # time.sleep(6)
+    # directkeys.go_left()
+    # time.sleep(1)
+    # directkeys.go_forward_QL(3.5)
+    # time.sleep(0.5)
+    # directkeys.lock_vision()
+    # print("New game start")
+
+if __name__ == "__main__":
+    restart()
